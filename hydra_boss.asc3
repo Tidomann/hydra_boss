@@ -65,9 +65,10 @@ script_id BMCx
 	var set defCycle 0 13
 	var set wRes 0 13
 	var set buildGas 0 13
-	queue 1 drone larva 11 Local Loc.63 80
+	#Specific Ai Towns Called Here (for town number changes)
+	queue 1 drone larva 8 Local Loc.63 80
 	queue 1 scv command_center 12 Local Loc.63 80
-	queue 1 probe nexus 8 Local Loc.63 80
+	queue 1 probe nexus 11 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
 	multi cheatResource
 	multi uAttack
