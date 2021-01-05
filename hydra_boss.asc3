@@ -73,6 +73,8 @@ script_id ZSUx
 	multi wGas
 	multi wSupply
 	multi htown
+	multi terranRaceStart
+	multi protossRaceStart
 	
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
@@ -167,23 +169,21 @@ script_id ZSUx
 	wait 300
 	#Specific Resource Area Called
 	queue 1 overlord larva 255 Global Loc.63 80
-	multi terranRaceStart
-	multi protossRaceStart
 	var set buildSupply 1 13
 	goto zWorkertest
 	
 	:terranRaceStart
-	wait 11
-	create_script terranStart 13 (1472 528) 0 12
+	wait 1
+	create_script terranStart 13 Loc.8~64 255 12
 	goto idle
 	
 	:protossRaceStart
 	wait 1
-	create_script protossStart 13 (4800 528) 0 11
+	create_script protossStart 13 Loc.9~64 255 11
 	goto idle
 	
 	:terranStart
-	start_town
+	start_areatown
 	wait 1
 	set_id 12
 	town_state 12 persist true
@@ -194,7 +194,7 @@ script_id ZSUx
 	goto idle
 	
 	:protossStart
-	start_town
+	start_areatown
 	wait 1
 	set_id 11
 	town_state 11 persist true
