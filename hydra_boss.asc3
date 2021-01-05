@@ -1,7 +1,7 @@
 ###script by Tidomann
 ###Tri-Race AI Script
-script_name Expansion Zerg Campaign Insane
-script_id ZSUx
+script_name Expansion Zerg Campaign Area Town
+script_id ZARx
 
 	unstart_campaign
 	wait 1
@@ -14,6 +14,7 @@ script_id ZSUx
 	aictrl dont_build_gas
 	aictrl unit_mover_enabled
 	aictrl dont_focus_disabled
+	farms_timing
 	transports_off
 	guard_all
 	m_force 3000
@@ -27,10 +28,8 @@ script_id ZSUx
 	dth 13 Set 1 scanner_sweep blank
 	print NewVersion
 	multi cheatResource
-	multi tsupply
 	multi zWorkertest
 
-	
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
 	upg_j 13 Set 58 2 blank
@@ -47,7 +46,7 @@ script_id ZSUx
 	return
 	
 	:tsupply
-	farms_notiming
+	farms_timing
 	wait 300
 	goto tsupply
 	
