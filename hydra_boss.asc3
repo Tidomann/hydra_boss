@@ -1,7 +1,7 @@
 ###script by Tidomann
 ###Tri-Race AI Script
-script_name Boss Expansion Custom Level
-script_id BMCx
+script_name Expansion Zerg Campaign Insane
+script_id ZSUx
 
 	wait 1
 	unstart_campaign
@@ -19,10 +19,8 @@ script_id BMCx
 	m_force 3000
 	help
 	i_orders DisableBuiltin 0 0 0 0 0 0 0
+	town_state 255 persist true
 	i_tactics nydus_placement_ai 300 set
-	town_state 11 persist true
-	town_state 12 persist true
-	town_state 8 persist true
 	var set buildSupply 0 13
 	var set ptownCount 1 13
 	var set pminingCount 1 13
@@ -65,14 +63,12 @@ script_id BMCx
 	var set defCycle 0 13
 	var set wRes 0 13
 	var set buildGas 0 13
-	#Specific Ai Towns Called Here (for town number changes)
-	queue 1 drone larva 8 Local Loc.63 80
-	queue 1 scv command_center 12 Local Loc.63 80
-	queue 1 probe nexus 11 Local Loc.63 80
+	queue 1 drone larva 255 Local Loc.63 80
+	queue 1 scv command_center 255 Local Loc.63 80
+	queue 1 probe nexus 255 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
 	multi cheatResource
 	multi uAttack
-	multi defRefresh
 	multi wResource
 	multi wGas
 	multi wSupply
@@ -169,11 +165,67 @@ script_id BMCx
 	
 	:htown
 	wait 300
+	#Specific Resource Area Called
 	queue 1 overlord larva 255 Global Loc.63 80
-	bld 1 pylon 72
-	bld 1 supply_depot 70
-	wait 300
+	multi terranRaceStart
+	multi protossRaceStart
 	var set buildSupply 1 13
+	goto zWorkertest
 	
+	:terranRaceStart
+	wait 11
+	create_script terranStart 13 (1472 528) 0 12
+	goto idle
 	
-
+	:protossRaceStart
+	wait 1
+	create_script protossStart 13 (4800 528) 0 11
+	goto idle
+	
+	:terranStart
+	start_town
+	wait 1
+	set_id 12
+	town_state 12 persist true
+	capt_expand
+	wait 1
+	multi addterranbuildings
+	multi tWorkertest
+	goto idle
+	
+	:protossStart
+	start_town
+	wait 1
+	set_id 11
+	town_state 11 persist true
+	capt_expand
+	wait 1
+	multi addprotossbuildings
+	multi pWorkertest
+	goto idle
+	
+	:addterranbuildings
+	wait 1
+	add_build 12 supply_depot 1
+	print BuildingDepot
+	goto blank
+	
+	:addprotossbuildings
+	add_build 11 pylon 1
+	print buildingpylon
+	goto blank
+	
+	:zWorkertest
+	queue 1 drone larva 255 Local Loc.63 80
+	wait 300
+	goto zWorkertest
+	
+	:tWorkertest
+	queue 1 scv command_center 255 Local Loc.63 80
+	wait 300
+	goto tWorkertest
+	
+	:pWorkertest
+	queue 1 probe nexus 255 Local Loc.63 80
+	wait 300
+	goto pWorkertest
