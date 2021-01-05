@@ -1,0 +1,231 @@
+###script by Tidomann
+###Tri-Race AI Script
+script_name Expansion Zerg Campaign Insane
+script_id ZSUx
+
+	wait 1
+	unstart_campaign
+	start_town
+	wait 1
+	set_free_id
+	defaultbuild_off
+	wait 1
+	aictrl dont_build_gas
+	aictrl unit_mover_enabled
+	aictrl dont_focus_disabled
+	farms_notiming
+	transports_off
+	guard_all
+	m_force 3000
+	help
+	i_orders DisableBuiltin 0 0 0 0 0 0 0
+	town_state 255 persist true
+	i_tactics nydus_placement_ai 300 set
+	var set buildSupply 0 13
+	var set ptownCount 1 13
+	var set pminingCount 1 13
+	var set punderAttack 0 13
+	var set pcutWorker 0 13
+	var set pcanExpand 0 13
+	var set pcanAttack 0 13
+	var set pcanUpgrade 0 13
+	var set pcanStatic 0 13
+	var set pcanQueue 0 13
+	var set pcanProd 0 13
+	var set pbuildDone 0 13
+	var set patkCycle 0 13
+	var set pprodCycle 0 13
+	var set ttownCount 1 13
+	var set tminingCount 1 13
+	var set tunderAttack 0 13
+	var set tcutWorker 0 13
+	var set tcanExpand 0 13
+	var set tcanAttack 0 13
+	var set tcanUpgrade 0 13
+	var set tcanStatic 0 13
+	var set tcanQueue 0 13
+	var set tcanProd 0 13
+	var set tbuildDone 0 13
+	var set tatkCycle 0 13
+	var set tprodCycle 0 13
+	var set zminingCount 1 13
+	var set zunderAttack 0 13
+	var set zcutWorker 0 13
+	var set zcanExpand 0 13
+	var set zcanAttack 0 13
+	var set zcanUpgrade 0 13
+	var set zcanStatic 0 13
+	var set zcanQueue 0 13
+	var set zcanProd 0 13
+	var set zbuildDone 0 13
+	var set zatkCycle 0 13
+	var set zprodCycle 0 13
+	var set defCycle 0 13
+	var set wRes 0 13
+	var set buildGas 0 13
+	queue 1 drone larva 255 Local Loc.63 80
+	queue 1 scv command_center 255 Local Loc.63 80
+	queue 1 probe nexus 255 Local Loc.63 80
+	dth 13 Set 1 scanner_sweep blank
+	multi cheatResource
+	multi uAttack
+	multi wResource
+	multi wGas
+	multi wSupply
+	multi htown
+	
+	:cheatResource
+	dth 13 Ex 1 alkajelisk_egg blank
+	upg_j 13 Set 58 2 blank
+	stop
+	
+	:idle
+	wait 25500
+	goto idle
+
+	:blank
+	stop
+	
+	:blankReturn
+	return
+
+	:initTown
+	start_town
+	wait 1
+	set_free_id
+	return
+	
+	:uAttack
+	wait 12
+	player_combat 17 13 63 True Wait Any Group_Buildings|scv|probe|drone|larva_egg|larva
+	var set underAttack 1 13
+	under_attack 1
+	player_combat 17 13 63 False WF(240) Any Group_Buildings|scv|probe|drone|larva_egg|larva
+	player_combat 17 13 63 True Call Any Group_Buildings|scv|probe|drone|larva_egg|larva uAttackMax 13
+	
+	:uAttackFin
+	var set underAttack 0 13
+	var set canProd 1 13
+	under_attack 0
+	goto uAttack
+
+	:uAttackMax
+	var set tcanProd 0 13
+	var set pcanProd 0 13
+	var set zcanProd 0 13
+	under_attack 2
+	player_combat 17 13 63 False WF(480) Any Group_Buildings|scv|probe|drone|larva_egg|larva
+	return
+
+	:wResource
+	aictrl wait_request_resources
+	var Ex|wait wRes 1 13
+	aictrl dont_wait_request_resources
+	wait 24
+	var Ex|wait wRes 0 13
+	goto wResource
+
+	:wGas
+	var Ex|wait buildGas 1 13
+	aictrl build_gas
+	
+	:wGas2
+	resarea 255 AtM 255 Gas 5000 blank
+	wait 960
+	bld 2 assimilator 66
+	stop
+
+	:wSupply
+	multi wZSupply2
+	multi wTSupply2
+	multi wPSupply2
+	def_max 255 overlord
+	var Ex|wait buildSupply 1 13
+	goto wSupply3
+
+	:wZSupply2
+	dth 13 AtL_W 1 overlord blank
+	var Ex|jump buildSupply 1 blank 13
+	
+	:wTSupply2
+	dth 13 AtL_W 1 supply_depot blank
+	var Ex|jump tbuildSupply 1 blank 13
+	
+	:wPSupply2
+	dth 13 AtL_W 1 pylon blank
+	var Ex|jump pbuildSupply 1 blank 13
+
+	:wSupply3
+	farms_timing
+	def_max 254 overlord
+	var set zcanQueue 1 13
+	var set pcanQueue 1 13
+	var set tcanQueue 1 13
+	stop
+	
+	:htown
+	wait 300
+	#Specific Resource Area Called
+	queue 1 overlord larva 255 Global Loc.63 80
+	multi terranRaceStart
+	multi protossRaceStart
+	var set buildSupply 1 13
+	goto zWorkertest
+	
+	:terranRaceStart
+	wait 11
+	create_script terranStart 13 (1472 528) 0 12
+	goto idle
+	
+	:protossRaceStart
+	wait 1
+	create_script protossStart 13 (4800 528) 0 11
+	goto idle
+	
+	:terranStart
+	start_town
+	wait 1
+	set_id 12
+	town_state 12 persist true
+	capt_expand
+	wait 1
+	multi addterranbuildings
+	multi tWorkertest
+	goto idle
+	
+	:protossStart
+	start_town
+	wait 1
+	set_id 11
+	town_state 11 persist true
+	capt_expand
+	wait 1
+	multi addprotossbuildings
+	multi pWorkertest
+	goto idle
+	
+	:addterranbuildings
+	wait 1
+	add_build 12 supply_depot 1
+	print BuildingDepot
+	goto blank
+	
+	:addprotossbuildings
+	add_build 11 pylon 1
+	print buildingpylon
+	goto blank
+	
+	:zWorkertest
+	queue 1 drone larva 255 Local Loc.63 80
+	wait 300
+	goto zWorkertest
+	
+	:tWorkertest
+	queue 1 scv command_center 255 Local Loc.63 80
+	wait 300
+	goto tWorkertest
+	
+	:pWorkertest
+	queue 1 probe nexus 255 Local Loc.63 80
+	wait 300
+	goto pWorkertest
