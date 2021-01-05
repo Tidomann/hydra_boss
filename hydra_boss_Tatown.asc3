@@ -1,0 +1,37 @@
+###script by Tidomann
+###Tri-Race AI Script
+script_name Expansion Terran Campaign Area Town
+script_id TARx
+
+	wait 1
+	unstart_campaign
+	start_areatown
+	defaultbuild_off
+	wait 1
+	set_free_id
+	town_state 255 persist true
+	capt_expand
+	wait 1
+	queue 1 scv command_center 255 Local Loc.63 80
+	multi addterranbuildings
+	
+	:idle
+	wait 25500
+	goto idle
+
+	:blank
+	stop
+	
+	:blankReturn
+	return
+	
+	:addterranbuildings
+	bld 1 supply_depot 75
+	print BuildingDepot
+	multi tWorkertest
+	goto idle
+	
+	:tWorkertest
+	queue 1 scv command_center 255 Local Loc.63 80
+	wait 300
+	goto tWorkertest

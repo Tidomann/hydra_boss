@@ -1,0 +1,37 @@
+###script by Tidomann
+###Tri-Race AI Script
+script_name Expansion Protoss Campaign Area Town
+script_id PARx
+
+	wait 1
+	unstart_campaign
+	start_areatown
+	defaultbuild_off
+	wait 1
+	set_free_id
+	town_state 255 persist true
+	capt_expand
+	wait 1
+	queue 1 probe nexus 255 Local Loc.63 80
+	multi addprotossbuildings
+	
+	:idle
+	wait 25500
+	goto idle
+
+	:blank
+	stop
+	
+	:blankReturn
+	return
+	
+	:addprotossbuildings
+	bld 1 pylon 75
+	print buildingpylon
+	multi pWorkertest
+	goto idle
+	
+	:pWorkertest
+	queue 1 probe nexus 255 Local Loc.63 80
+	wait 300
+	goto pWorkertest

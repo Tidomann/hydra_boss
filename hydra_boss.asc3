@@ -13,7 +13,7 @@ script_id ZSUx
 	aictrl dont_build_gas
 	aictrl unit_mover_enabled
 	aictrl dont_focus_disabled
-	farms_notiming
+	farms_timing
 	transports_off
 	guard_all
 	m_force 3000
@@ -63,18 +63,11 @@ script_id ZSUx
 	var set defCycle 0 13
 	var set wRes 0 13
 	var set buildGas 0 13
+	def_max 255 overlord
 	queue 1 drone larva 255 Local Loc.63 80
-	queue 1 scv command_center 255 Local Loc.63 80
-	queue 1 probe nexus 255 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
 	multi cheatResource
-	multi uAttack
-	multi wResource
-	multi wGas
-	multi wSupply
 	multi htown
-	multi terranRaceStart
-	multi protossRaceStart
 	
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
@@ -97,135 +90,13 @@ script_id ZSUx
 	set_free_id
 	return
 	
-	:uAttack
-	wait 12
-	player_combat 17 13 63 True Wait Any Group_Buildings|scv|probe|drone|larva_egg|larva
-	var set underAttack 1 13
-	under_attack 1
-	player_combat 17 13 63 False WF(240) Any Group_Buildings|scv|probe|drone|larva_egg|larva
-	player_combat 17 13 63 True Call Any Group_Buildings|scv|probe|drone|larva_egg|larva uAttackMax 13
-	
-	:uAttackFin
-	var set underAttack 0 13
-	var set canProd 1 13
-	under_attack 0
-	goto uAttack
-
-	:uAttackMax
-	var set tcanProd 0 13
-	var set pcanProd 0 13
-	var set zcanProd 0 13
-	under_attack 2
-	player_combat 17 13 63 False WF(480) Any Group_Buildings|scv|probe|drone|larva_egg|larva
-	return
-
-	:wResource
-	aictrl wait_request_resources
-	var Ex|wait wRes 1 13
-	aictrl dont_wait_request_resources
-	wait 24
-	var Ex|wait wRes 0 13
-	goto wResource
-
-	:wGas
-	var Ex|wait buildGas 1 13
-	aictrl build_gas
-	
-	:wGas2
-	resarea 255 AtM 255 Gas 5000 blank
-	wait 960
-	bld 2 assimilator 66
-	stop
-
-	:wSupply
-	multi wZSupply2
-	multi wTSupply2
-	multi wPSupply2
-	def_max 255 overlord
-	var Ex|wait buildSupply 1 13
-	goto wSupply3
-
-	:wZSupply2
-	dth 13 AtL_W 1 overlord blank
-	var Ex|jump buildSupply 1 blank 13
-	
-	:wTSupply2
-	dth 13 AtL_W 1 supply_depot blank
-	var Ex|jump tbuildSupply 1 blank 13
-	
-	:wPSupply2
-	dth 13 AtL_W 1 pylon blank
-	var Ex|jump pbuildSupply 1 blank 13
-
-	:wSupply3
-	farms_timing
-	def_max 254 overlord
-	var set zcanQueue 1 13
-	var set pcanQueue 1 13
-	var set tcanQueue 1 13
-	stop
-	
 	:htown
 	wait 300
-	#Specific Resource Area Called
 	queue 1 overlord larva 255 Global Loc.63 80
 	var set buildSupply 1 13
 	goto zWorkertest
-	
-	:terranRaceStart
-	wait 1
-	create_script terranStart 13 Loc.8~64 255 12
-	goto idle
-	
-	:protossRaceStart
-	wait 1
-	create_script protossStart 13 Loc.9~64 255 11
-	goto idle
-	
-	:terranStart
-	start_areatown
-	wait 1
-	set_id 12
-	town_state 12 persist true
-	capt_expand
-	wait 1
-	multi addterranbuildings
-	multi tWorkertest
-	goto idle
-	
-	:protossStart
-	start_areatown
-	wait 1
-	set_id 11
-	town_state 11 persist true
-	capt_expand
-	wait 1
-	multi addprotossbuildings
-	multi pWorkertest
-	goto idle
-	
-	:addterranbuildings
-	wait 1
-	add_build 12 supply_depot 1
-	print BuildingDepot
-	goto blank
-	
-	:addprotossbuildings
-	add_build 11 pylon 1
-	print buildingpylon
-	goto blank
 	
 	:zWorkertest
 	queue 1 drone larva 255 Local Loc.63 80
 	wait 300
 	goto zWorkertest
-	
-	:tWorkertest
-	queue 1 scv command_center 255 Local Loc.63 80
-	wait 300
-	goto tWorkertest
-	
-	:pWorkertest
-	queue 1 probe nexus 255 Local Loc.63 80
-	wait 300
-	goto pWorkertest
