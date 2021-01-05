@@ -3,17 +3,17 @@
 script_name Expansion Zerg Campaign Insane
 script_id ZSUx
 
-	wait 1
 	unstart_campaign
+	wait 1
 	start_town
+	defaultbuild_off
+	default_min 0
 	wait 1
 	set_free_id
-	defaultbuild_off
 	wait 1
 	aictrl dont_build_gas
 	aictrl unit_mover_enabled
 	aictrl dont_focus_disabled
-	farms_timing
 	transports_off
 	guard_all
 	m_force 3000
@@ -21,53 +21,15 @@ script_id ZSUx
 	i_orders DisableBuiltin 0 0 0 0 0 0 0
 	town_state 255 persist true
 	i_tactics nydus_placement_ai 300 set
-	var set buildSupply 0 13
-	var set ptownCount 1 13
-	var set pminingCount 1 13
-	var set punderAttack 0 13
-	var set pcutWorker 0 13
-	var set pcanExpand 0 13
-	var set pcanAttack 0 13
-	var set pcanUpgrade 0 13
-	var set pcanStatic 0 13
-	var set pcanQueue 0 13
-	var set pcanProd 0 13
-	var set pbuildDone 0 13
-	var set patkCycle 0 13
-	var set pprodCycle 0 13
-	var set ttownCount 1 13
-	var set tminingCount 1 13
-	var set tunderAttack 0 13
-	var set tcutWorker 0 13
-	var set tcanExpand 0 13
-	var set tcanAttack 0 13
-	var set tcanUpgrade 0 13
-	var set tcanStatic 0 13
-	var set tcanQueue 0 13
-	var set tcanProd 0 13
-	var set tbuildDone 0 13
-	var set tatkCycle 0 13
-	var set tprodCycle 0 13
-	var set zminingCount 1 13
-	var set zunderAttack 0 13
-	var set zcutWorker 0 13
-	var set zcanExpand 0 13
-	var set zcanAttack 0 13
-	var set zcanUpgrade 0 13
-	var set zcanStatic 0 13
-	var set zcanQueue 0 13
-	var set zcanProd 0 13
-	var set zbuildDone 0 13
-	var set zatkCycle 0 13
-	var set zprodCycle 0 13
-	var set defCycle 0 13
-	var set wRes 0 13
-	var set buildGas 0 13
 	def_max 255 overlord
 	queue 1 drone larva 255 Local Loc.63 80
+	queue 1 overlord larva 255 Global Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
+	print NewVersion
 	multi cheatResource
-	multi htown
+	multi tsupply
+	multi zWorkertest
+
 	
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
@@ -83,18 +45,11 @@ script_id ZSUx
 	
 	:blankReturn
 	return
-
-	:initTown
-	start_town
-	wait 1
-	set_free_id
-	return
 	
-	:htown
+	:tsupply
+	farms_notiming
 	wait 300
-	queue 1 overlord larva 255 Global Loc.63 80
-	var set buildSupply 1 13
-	goto zWorkertest
+	goto tsupply
 	
 	:zWorkertest
 	queue 1 drone larva 255 Local Loc.63 80

@@ -3,17 +3,19 @@
 script_name Expansion Terran Campaign Area Town
 script_id TARx
 
-	wait 1
-	unstart_campaign
 	start_areatown
 	defaultbuild_off
+	default_min 0
+	wait 1
+	bld 1 command_center 80
+	bld 2 scv 80
+	bld 1 supply_depot 75
 	wait 1
 	set_free_id
-	town_state 255 persist true
 	capt_expand
 	wait 1
 	queue 1 scv command_center 255 Local Loc.63 80
-	multi addterranbuildings
+	multi tWorkertest
 	
 	:idle
 	wait 25500
@@ -24,12 +26,6 @@ script_id TARx
 	
 	:blankReturn
 	return
-	
-	:addterranbuildings
-	bld 1 supply_depot 75
-	print BuildingDepot
-	multi tWorkertest
-	goto idle
 	
 	:tWorkertest
 	queue 1 scv command_center 255 Local Loc.63 80
