@@ -22,14 +22,12 @@ script_id ZSUx
 	i_orders DisableBuiltin 0 0 0 0 0 0 0
 	town_state 255 persist true
 	i_tactics nydus_placement_ai 300 set
-	def_max 255 overlord
-	queue 1 drone larva 255 Local Loc.63 80
+	queue 1 overlord larva 255 Local Loc.63 80
 	queue 1 probe nexus 255 Local Loc.63 80
 	queue 1 scv command_center 255 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
-	print wtfsadv3
+	print This<32>is<32>the<32>single<32>AI<32>script
 	multi cheatResource
-	multi init
 	multi zWorkertest
 	multi pWorkertest
 	multi tWorkertest
@@ -49,35 +47,19 @@ script_id ZSUx
 	:blankReturn
 	return
 	
-	:init
-	create_script protossStart 13 Loc.9 255 11
-	create_script terranStart 13 Loc.8 255 12
-	goto blank
-	
-	:protossStart
-	start_areatown
-	defaultbuild_off
-	default_min 0
-	print inprotossStart
-	bld 1 Nexus 80
-	bld 2 probe 80
-	bld 1 pylon 75
-	set_free_id
-	print settownid
-	
 	:zWorkertest
-	queue 1 drone larva 255 Local Loc.63 80
 	wait 300
+	queue 1 drone larva 255 Local Loc.63 80
 	goto zWorkertest
 	
 	:pWorkertest
-	queue 1 probe nexus 255 Local Loc.63 80
 	wait 300
+	queue 1 probe nexus 255 Local Loc.63 80
 	goto pWorkertest
 	
 	:tWorkertest
-	queue 1 scv command_center 255 Local Loc.63 80
 	wait 300
+	queue 1 scv command_center 255 Local Loc.63 80
 	goto pWorkertest
 
 	

@@ -45,11 +45,6 @@ script_id ZARx
 	:blankReturn
 	return
 	
-	:tsupply
-	farms_timing
-	wait 300
-	goto tsupply
-	
 	:zWorkertest
 	queue 1 drone larva 255 Local Loc.63 80
 	wait 300
