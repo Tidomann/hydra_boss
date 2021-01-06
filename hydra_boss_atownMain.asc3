@@ -6,8 +6,6 @@ script_id ZARx
 	unstart_campaign
 	wait 1
 	start_town
-	defaultbuild_off
-	default_min 0
 	wait 1
 	set_free_id
 	wait 1

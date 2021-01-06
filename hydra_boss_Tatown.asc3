@@ -4,8 +4,6 @@ script_name Expansion Terran Campaign Area Town
 script_id TARx
 
 	start_areatown
-	defaultbuild_off
-	default_min 0
 	wait 1
 	bld 1 command_center 80
 	bld 2 scv 80

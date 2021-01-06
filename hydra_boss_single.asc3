@@ -3,6 +3,8 @@
 script_name Expansion Zerg Campaign Insane
 script_id ZSUx
 
+	create_script protossStart 255 Loc.8 255 11
+	create_script terranStart 255 Loc.7 255 12
 	wait 1
 	unstart_campaign
 	start_town
@@ -29,8 +31,6 @@ script_id ZSUx
 	print This<32>is<32>the<32>single<32>AI<32>script
 	multi cheatResource
 	multi zWorkertest
-	multi pWorkertest
-	multi tWorkertest
 
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
@@ -60,7 +60,25 @@ script_id ZSUx
 	:tWorkertest
 	wait 300
 	queue 1 scv command_center 255 Local Loc.63 80
-	goto pWorkertest
+	goto tWorkertest
 
+	:protossStart
+	start_areatown
+	set_free_id
+	town_state 255 persist true
+	bld 1 nexus 80
+	bld 2 probe 80
+	bld 1 pylon 75
+	multi pWorkertest
+	goto idle
 	
+	:terranStart
+	start_areatown
+	set_free_id
+	town_state 255 persist true
+	bld 1 command_center 80
+	bld 2 scv 80
+	bld 1 supply_depot 75
+	multi tWorkertest
+	goto idle
 	

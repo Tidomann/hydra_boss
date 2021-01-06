@@ -4,8 +4,6 @@ script_name Expansion Protoss Campaign Area Town
 script_id PARx
 
 	start_areatown
-	defaultbuild_off
-	default_min 0
 	wait 1
 	bld 1 Nexus 80
 	bld 2 probe 80
