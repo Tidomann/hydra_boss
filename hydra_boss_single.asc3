@@ -24,23 +24,17 @@ script_id ZSUx
 	i_orders DisableBuiltin 0 0 0 0 0 0 0
 	town_state 255 persist true
 	i_tactics nydus_placement_ai 300 set
-<<<<<<< Updated upstream
-=======
 	print This<32>is<32>the<32>single<32>AI<32>script
 	var set hUnderAttack 0 13
 	var set hCanAttack 0 13
 	var set hBuildGas 0 13
 	var set wRes 0 13
->>>>>>> Stashed changes
 	queue 1 overlord larva 255 Local Loc.63 80
 	queue 1 probe nexus 255 Local Loc.63 80
 	queue 1 scv command_center 255 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
 	print This<32>is<32>the<32>single<32>AI<32>script
 	multi cheatResource
-<<<<<<< Updated upstream
-	multi zWorkertest
-=======
 	multi uAttack
 	multi wResource
 	multi wGas
@@ -55,7 +49,6 @@ script_id ZSUx
 	
 	:protossBuild
 	dth 13 Rand 4 disruption_web_unit blank
->>>>>>> Stashed changes
 
 	#Ai Personalities And Build Selector
 
@@ -75,23 +68,6 @@ script_id ZSUx
 	:blankReturn
 	return
 	
-<<<<<<< Updated upstream
-	:zWorkertest
-	wait 300
-	queue 1 drone larva 255 Local Loc.63 80
-	goto zWorkertest
-	
-	:pWorkertest
-	wait 300
-	queue 1 probe nexus 255 Local Loc.63 80
-	goto pWorkertest
-	
-	:tWorkertest
-	wait 300
-	queue 1 scv command_center 255 Local Loc.63 80
-	goto tWorkertest
-
-=======
 	:initTown
 	start_town
 	wait 1
@@ -138,7 +114,6 @@ script_id ZSUx
 	stop
 	
 	#Protoss Functions
->>>>>>> Stashed changes
 	:protossStart
 	start_areatown
 	set_free_id
@@ -159,14 +134,6 @@ script_id ZSUx
 	start_areatown
 	set_free_id
 	town_state 255 persist true
-<<<<<<< Updated upstream
-	bld 1 command_center 80
-	bld 2 scv 80
-	bld 1 supply_depot 75
-	multi tWorkertest
-	goto idle
-	
-=======
 	var set tCanStatic 0 13
 	var set tCanAttack 0 13
 	var set tCutWorker 0 13
@@ -389,4 +356,3 @@ script_id ZSUx
 	call addNaniteCheck
 	call addIronCheck
 	return
->>>>>>> Stashed changes
