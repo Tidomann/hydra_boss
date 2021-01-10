@@ -24,14 +24,42 @@ script_id ZSUx
 	i_orders DisableBuiltin 0 0 0 0 0 0 0
 	town_state 255 persist true
 	i_tactics nydus_placement_ai 300 set
+<<<<<<< Updated upstream
+=======
+	print This<32>is<32>the<32>single<32>AI<32>script
+	var set hUnderAttack 0 13
+	var set hCanAttack 0 13
+	var set hBuildGas 0 13
+	var set wRes 0 13
+>>>>>>> Stashed changes
 	queue 1 overlord larva 255 Local Loc.63 80
 	queue 1 probe nexus 255 Local Loc.63 80
 	queue 1 scv command_center 255 Local Loc.63 80
 	dth 13 Set 1 scanner_sweep blank
 	print This<32>is<32>the<32>single<32>AI<32>script
 	multi cheatResource
+<<<<<<< Updated upstream
 	multi zWorkertest
+=======
+	multi uAttack
+	multi wResource
+	multi wGas
+	multi zTown
+	wait 1
+	
+	:terranBuild
+	dth 13 Rand 4 t_beacon zergBuild
+	
+	:zergBuild
+	dth 13 Rand 3 dark_swarm_unit protossBuild
+	
+	:protossBuild
+	dth 13 Rand 4 disruption_web_unit blank
+>>>>>>> Stashed changes
 
+	#Ai Personalities And Build Selector
+
+	#Generic Functions	
 	:cheatResource
 	dth 13 Ex 1 alkajelisk_egg blank
 	upg_j 13 Set 58 2 blank
@@ -47,6 +75,7 @@ script_id ZSUx
 	:blankReturn
 	return
 	
+<<<<<<< Updated upstream
 	:zWorkertest
 	wait 300
 	queue 1 drone larva 255 Local Loc.63 80
@@ -62,6 +91,54 @@ script_id ZSUx
 	queue 1 scv command_center 255 Local Loc.63 80
 	goto tWorkertest
 
+=======
+	:initTown
+	start_town
+	wait 1
+	set_free_id
+	return
+	
+	:uAttack
+	wait 12
+	player_combat 17 13 63 True WF(720) Any Group_Buildings|drone|larva_egg|larva|scv|probe
+	var set underAttack 1 13
+	under_attack 1
+	player_combat 17 13 63 False WF(240) Any Group_Buildings|drone|larva_egg|larva|scv|probe
+	player_combat 17 13 63 True Call Any Group_Buildings|drone|larva_egg|larva|scv|probe uAttackMax 13
+	
+	:uAttackFin
+	var set underAttack 0 13
+	var set canProd 1 13
+	under_attack 0
+	goto uAttack
+	
+	:uAttackMax
+	var set canProd 0 13
+	under_attack 2
+	player_combat 17 13 63 False WF(480) Group_Buildings|drone|larva_egg|larva|scv|probe
+	return
+	
+	:wResource
+	aictrl wait_request_resources
+	var Ex|wait wRes 1 13
+	aictrl dont_wait_request_resources
+	wait 24
+	var Ex|wait wRes 0 13
+	goto wResource
+
+	:wGas
+	var Ex|wait buildGas 1 13
+	aictrl build_gas
+
+	#Zerg Functions
+	:wGasZ
+	resarea 255 AtM 255 Gas 5000 blank
+	wait 960
+	bld 2 extractor 66
+	stop
+	
+	#Protoss Functions
+>>>>>>> Stashed changes
 	:protossStart
 	start_areatown
 	set_free_id
@@ -69,16 +146,247 @@ script_id ZSUx
 	bld 1 nexus 80
 	bld 2 probe 80
 	bld 1 pylon 75
-	multi pWorkertest
 	goto idle
 	
+	:wGasP
+	resarea 255 AtM 255 Gas 5000 blank
+	wait 960
+	bld 2 extractor 66
+	stop
+	
+	#Terran Functions
 	:terranStart
 	start_areatown
 	set_free_id
 	town_state 255 persist true
+<<<<<<< Updated upstream
 	bld 1 command_center 80
 	bld 2 scv 80
 	bld 1 supply_depot 75
 	multi tWorkertest
 	goto idle
 	
+=======
+	var set tCanStatic 0 13
+	var set tCanAttack 0 13
+	var set tCutWorker 0 13
+	var set tCanExpand 0 13
+	var set tProdCycle 0 13
+	var set tAddProdWait 0 13
+	multi tTown
+	goto idle
+	
+	:wGasT
+	resarea 255 AtM 255 Gas 5000 blank
+	wait 960
+	bld 2 extractor 66
+	stop
+	
+	:tTown
+	bld 1 command_center 110
+	w_bld 1 command_center
+	multi tBldOrder
+	
+	#Terran Build Orders
+	:tBldOrder
+	random_jump 64 buildBio3RaxM&M
+	random_jump 64 buildBio4RaxPressure
+	random_jump 64 buildMechTankTiming
+	goto buildMechFE
+
+	
+	:buildMechTankTiming
+	wait 300
+	bld 1 refinery 72
+	wait 600
+	bld 1 factory 75
+	wait 300
+	bld 2 factory 75
+	wait 24
+	queue 1 vulture factory 255 Local Loc.63 80
+	wait 24
+	queue 1 vulture factory 255 Local Loc.63 80
+	wait 150
+	bld 1 engineering_bay 80
+	wait 900
+	bld 1 machine_shop 75
+	wait 24
+	queue 1 southpaw factory 255 Local Loc.63 80
+	wait 24
+	queue 1 southpaw factory 255 Local Loc.63 80
+	wait 24
+	queue 1 southpaw factory 255 Local Loc.63 80
+	wait 24
+	queue 1 southpaw factory 255 Local Loc.63 80
+	wait 300
+	bld 1 salvo_yard 74
+	wait 24
+	bld 2 armory 80
+	wait 24
+	bld 3 factory 75
+	wait 300
+	queue 1 madrigal factory 255 Local Loc.63 80
+	wait 24
+	queue 1 siege_tank factory 255 Local Loc.63 80
+	wait 100
+	upg 1 t_infantry_weapon 88
+	wait 24
+	upg 1 t_infantry_armor 88
+	wait 24
+	var set tCanStatic 1 13
+	wait 300
+	bld 2 machine_shop 75
+	wait 600
+	queue 2 siege_tank factory 255 Local Loc.63 80
+	wait 150
+	queue 2 madrigal factory 255 Local Loc.63 80
+	wait 300
+	var set tCanAttack 1 13
+	wait 24
+	bld 1 barracks 75
+	wait 600
+	bld 1 comsat_station 75
+	multi addProd
+	goto buildMechFin
+	
+	:buildMechFE
+	wait 600
+	bld 1 barracks 75
+	wait 300
+	bld 1 refinery 72
+	wait 600
+	bld 2 supply_depot 70
+	wait 24
+	queue 1 marine barracks 255 Global Loc.63 80
+	wait 300
+	queue 1 marine barracks 255 Global Loc.63 80
+	wait 24
+	bld 1 factory 75
+	wait 300
+	queue 1 marine barracks 255 Global Loc.63 80
+	wait 300
+	bld 3 supply_depot 70
+	wait 24
+	queue 1 vulture factory 255 Global Loc.63 80
+	wait 24
+	queue 1 vulture factory 255 Global Loc.63 80
+	wait 300
+	bld 1 armory 75
+	wait 300
+	bld 1 engineering_bay 80
+	wait 600
+	upg 1 t_infantry_weapon 88
+	wait 24
+	queue 1 marine barracks 255 Global Loc.63 80
+	wait 24
+	var set buildSupply 1 13
+	wait 24
+	bld 2 factory 75
+	wait 24
+	bld 1 machine_shop 75
+	wait 600
+	var set tCutWorker 1 13
+	var set tCanExpand 1 13
+	wait 600
+	var set tCutWorker 0 13
+	var set tCanExpand 0 13
+	wait 24
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 600
+	bld 2 machine_shop 75
+	wait 600
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 600
+	var set buildGas 1 13
+	wait 24
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 600
+	upg 2 t_infantry_weapon 88
+	wait 24
+	var set tCanAttack 1 13
+	wait 600
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 24
+	bld 3 factory 75
+	wait 24
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 24
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 450
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 24
+	queue 1 siege_tank factory 255 Global Loc.63 80
+	wait 450
+	var set tCanExpand 1 13
+	var set tCutWorker 1 13
+	wait 600
+	var set tCanExpand 0 13
+	var set tCutWorker 0 13
+	wait 150
+	upg 1 t_infantry_armor 88
+	wait 24
+	bld 3 machine_shop 75
+	wait 600
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 24
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 24
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 600
+	bld 5 factory 75
+	wait 24
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 24
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 24
+	queue 1 goliath factory 255 Global Loc.63 80
+	wait 300
+	bld 1 science_facility 80
+	wait 24
+	bld 1 starport 75
+	wait 900
+	multi tAddProd
+	wait 300
+	bld 1 control_tower 75
+	wait 24
+	goto buildMechFin
+	
+	:tAddProd
+	multi tExpSave
+	var set tCanProd 1 13
+	var AtL|wait townCount 1 13
+	local 255 AtL_W 1 command_center blank
+	
+	:tAddProdLoop
+	wait 12
+	var AtL|Call tProdCycle 1 tAddProdWait 13
+	var set prodCycle 0 13
+	var Ex|Wait canProd 1 13
+	call tAddProdCheck
+	wait 240
+	goto tAddProdLoop
+	
+	:tAddProdWait
+	bring 13 AtM 3 barracks|factory|starport Loc.63 blankReturn
+	local 255 AtM 1 barracks|factory|starport blankReturn
+	var AtL|Jump tMiningCount 3 blankReturn 13
+	var Ex|Jump tMiningCount 2 tAddProdWait2 13
+	wait 1200
+	return
+	
+	:tAddProdWait2
+	wait 600
+	return
+	
+	:tAddProdCheck
+	dth 13 Ex_C 1 disruption_web_unit addFactoryCheck
+	dth 13 Ex_C 2 disruption_web_unit addBarracksCheck
+	dth 13 Ex_C 3 disruption_web_unit addStarportCheck
+	var AtL|Jump prodCycle 1 blankReturn 13
+	call addBarracksCheck
+	call addFactoryCheck
+	call addStarportCheck
+	call addNaniteCheck
+	call addIronCheck
+	return
+>>>>>>> Stashed changes
